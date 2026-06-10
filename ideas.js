@@ -1,10 +1,10 @@
 // Whimsey! — shared activity ideas. Free or low-cost, doable same day.
 export const CATS = [
-  { id: 'all',      label: 'All whimsies', dot: '#9aa6b2' },
-  { id: 'indoors',  label: 'Indoors',      dot: '#e8a13c' },
-  { id: 'outdoors', label: 'Outdoors',     dot: '#4fa86b' },
-  { id: 'crafty',   label: 'Crafty',       dot: '#b06fd4' },
-  { id: 'gooddeeds',label: 'Good deeds',   dot: '#e2574c' },
+  { id: 'all',       label: 'All whimsies', icon: '\u2728' },           // ✨
+  { id: 'indoors',   label: 'Indoors',      icon: '\u{1F6CB}\uFE0F' },  // 🛋️
+  { id: 'outdoors',  label: 'Outdoors',     icon: '\u{1F333}' },        // 🌳
+  { id: 'crafty',    label: 'Crafty',       icon: '\u2702\uFE0F' },     // ✂️
+  { id: 'gooddeeds', label: 'Good deeds',   icon: '\u{1F49B}' },        // 💛
 ];
 
 export const IDEAS = [
@@ -54,3 +54,4 @@ export const IDEAS = [
 ];
 
 export const CAT_LABELS = Object.fromEntries(CATS.map(c => [c.id, c.label]));
+export const CAT_ICONS = Object.fromEntries(CATS.map(c => [c.id, c.icon]));
