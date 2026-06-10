@@ -240,7 +240,7 @@ class Component extends DCLogic {
       goLog: () => this.setState({ view: 'log' }),
       homeTabBg: s.view === 'home' ? activeTab : idleTab,
       logTabBg: s.view === 'log' ? activeTab : idleTab,
-      addr: 'https://whimsey.example/' + (s.view === 'log' ? 'my-whimsies' : ''),
+      addr: window.location.origin + '/' + (s.view === 'log' ? 'my-whimsies' : ''),
       cats,
       pick: this.pick,
       complete: this.complete,
