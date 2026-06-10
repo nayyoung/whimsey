@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; }
+    @keyframes whimsy-pop { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-150px) rotate(280deg); opacity: 0; } }
+    @keyframes card-in { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
+    @keyframes logo-bounce {
+      0% { transform: translateY(-90px) scale(.7); opacity: 0; }
+      55% { transform: translateY(10px) scale(1.04); opacity: 1; }
+      75% { transform: translateY(-6px) scale(.99); }
+      90% { transform: translateY(2px); }
+      100% { transform: none; opacity: 1; }
+    }
+    @keyframes bang-bounce {
+      0% { transform: translateY(-120px) rotate(-40deg) scale(.6); opacity: 0; }
+      55% { transform: translateY(12px) rotate(18deg) scale(1.12); opacity: 1; }
+      75% { transform: translateY(-7px) rotate(6deg); }
+      90% { transform: translateY(2px) rotate(11deg); }
+      100% { transform: rotate(10deg); opacity: 1; }
+    }
+  </style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; background: linear-gradient(180deg, #aebccd, #8fa2b8); display: flex; align-items: center; justify-content: center; padding: 36px 24px; font-family: 'Nunito', sans-serif;">
+  <div style="width: 1120px; max-width: 100%; border-radius: 9px; box-shadow: 0 24px 60px rgba(20,35,55,.45); border: 1px solid #6e8094; background: #b6c4d4; overflow: hidden;">
+
+    <div style="display: flex; align-items: flex-end; gap: 4px; padding: 9px 14px 0; background: linear-gradient(180deg, #cdd9e6, #b0bfd0);">
+      <button onClick="{{ goHome }}" style="display: flex; align-items: center; gap: 8px; border: 1px solid #8fa1b5; border-bottom: none; border-radius: 7px 7px 0 0; padding: 8px 18px 9px; font: 600 13px 'Nunito', sans-serif; color: #33414f; background: {{ homeTabBg }}; cursor: pointer;">
+        <span style="font-size: 13px; line-height: 1;">&#x2728;</span>
+        Whimsey!
+      </button>
+      <button onClick="{{ goLog }}" style="display: flex; align-items: center; gap: 8px; border: 1px solid #8fa1b5; border-bottom: none; border-radius: 7px 7px 0 0; padding: 8px 18px 9px; font: 600 13px 'Nunito', sans-serif; color: #33414f; background: {{ logTabBg }}; cursor: pointer;">
+        <span style="font-size: 13px; line-height: 1;">&#x1F4D6;</span>
+        My Whimsies ({{ count }})
+      </button>
+      <div style="align-self: center; margin-left: 6px; width: 22px; height: 16px; border-radius: 3px; background: rgba(255,255,255,.25); border: 1px solid rgba(255,255,255,.35); color: #4d5e70; font: 700 12px/14px 'Nunito', sans-serif; text-align: center;">+</div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 9px; padding: 9px 14px; background: linear-gradient(180deg, #f7fafc, #dfe7ef); border-top: 1px solid #ffffff; border-bottom: 1px solid #b3c0cf;">
+      <span style="width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(180deg, #fdfeff, #dde6ef); border: 1px solid #a9b8c8; display: flex; align-items: center; justify-content: center; color: #506173; font: 700 15px 'Nunito', sans-serif; box-shadow: 0 1px 0 #ffffff inset, 0 1px 2px rgba(0,0,0,.08);">&#8592;</span>
+      <span style="width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(180deg, #f2f6fa, #d8e1ea); border: 1px solid #b4c2d1; display: flex; align-items: center; justify-content: center; color: #9fb0c1; font: 700 15px 'Nunito', sans-serif; box-shadow: 0 1px 0 #ffffff inset;">&#8594;</span>
+      <span style="width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(180deg, #fdfeff, #dde6ef); border: 1px solid #a9b8c8; display: flex; align-items: center; justify-content: center; color: #506173; font: 600 16px 'Nunito', sans-serif; box-shadow: 0 1px 0 #ffffff inset, 0 1px 2px rgba(0,0,0,.08);">&#8635;</span>
+      <div style="flex: 1; display: flex; align-items: center; gap: 8px; background: #ffffff; border: 1px solid #a9b8c8; border-radius: 999px; padding: 7px 16px; box-shadow: 0 2px 3px rgba(0,0,0,.07) inset; color: #5c6c7d; font: 500 13px 'Nunito', sans-serif;">
+        <span style="color: #3e9b5f; font-weight: 700;">&#128274;&#xFE0E;</span>
+        <span style="flex: 1;">{{ addr }}</span>
+        <span style="color: #c4a23a; font-size: 15px;">&#9733;</span>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 2px; padding: 5px 12px; background: linear-gradient(180deg, #e7edf4, #d8e1ea); border-bottom: 1px solid #aebccb;">
+      <span style="font: 700 11px 'Nunito', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #7b8a99; margin-right: 8px;">Categories</span>
+      <sc-for list="{{ cats }}" as="cat" hint-placeholder-count="5">
+        <button onClick="{{ cat.onClick }}" style="display: flex; align-items: center; gap: 7px; border: {{ cat.bd }}; background: {{ cat.bg }}; border-radius: 4px; padding: 5px 11px; font: {{ cat.fw }} 13px 'Nunito', sans-serif; color: #3b4a59; cursor: pointer;">
+          <span style="font-size: 13px; line-height: 1;">{{ cat.icon }}</span>
+          {{ cat.label }}
+        </button>
+      </sc-for>
+    </div>
+
+
+    <div style="background: #ffffff; min-height: 560px; position: relative; display: flex; flex-direction: column;">
+
+      <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+        <div data-screen-label="Home" style="display: flex; flex-direction: column; align-items: center; padding: 92px 32px 64px;">
+          <div style="font: 700 88px 'Baloo 2', sans-serif; color: #2e3742; letter-spacing: -3px; line-height: 1; display: flex; align-items: baseline;">{{ logo }}</div>
+          <div style="width: 580px; max-width: 90%; margin-top: 38px; position: relative;">
+            <sc-if value="{{ showStart }}" hint-placeholder-val="{{ true }}">
+              <div style="border: 1px solid #dde3ea; border-radius: 999px; padding: 15px 26px; color: #9aa6b2; font: 400 16px 'Nunito', sans-serif; box-shadow: 0 2px 6px rgba(46,55,66,.08); background: #ffffff; text-align: left;">Press the button. Receive a whimsy.</div>
+            </sc-if>
+            <sc-if value="{{ showIdea }}" hint-placeholder-val="{{ false }}">
+              <div style="border: 1px solid #e3e8ee; border-radius: 22px; padding: 28px 32px 26px; background: #ffffff; box-shadow: 0 10px 28px rgba(46,55,66,.12); text-align: left; position: relative; animation: card-in .35s ease both;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-size: 14px; line-height: 1;">{{ ideaIcon }}</span>
+                  <span style="font: 700 11px 'Nunito', sans-serif; letter-spacing: .12em; text-transform: uppercase; color: #8694a3;">{{ ideaCatLabel }}</span>
+                </div>
+                <div style="margin-top: 12px; font: 500 22px/1.45 'Nunito', sans-serif; color: #2e3742; text-wrap: pretty;">{{ ideaText }}</div>
+                {{ confetti }}
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="margin-top: 32px; display: flex; gap: 14px; align-items: center;">
+            <sc-if value="{{ showStart }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ pick }}" style="border: 1px solid #d23f1f; border-radius: 6px; padding: 13px 30px; font: 700 15px 'Nunito', sans-serif; color: #ffffff; text-shadow: 0 1px 1px rgba(0,0,0,.18); background: linear-gradient(180deg, #ff7d52, #ff5a33 55%, #f04d27); box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 2px 4px rgba(210,63,31,.3); cursor: pointer;" style-hover="filter: brightness(1.06)" style-active="transform: translateY(1px); box-shadow: none">I&#8217;m feeling whimsical</button>
+            </sc-if>
+            <sc-if value="{{ showActions }}" hint-placeholder-val="{{ false }}">
+              <sc-if value="{{ showReroll }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ pick }}" style="border: 1px solid #b6c2cf; border-radius: 6px; padding: 12px 24px; font: 700 14px 'Nunito', sans-serif; color: #44525f; background: linear-gradient(180deg, #fdfeff, #e4eaf1); box-shadow: 0 1px 0 #ffffff inset, 0 1px 3px rgba(0,0,0,.08); cursor: pointer;" style-hover="filter: brightness(1.03)" style-active="transform: translateY(1px); box-shadow: none">One more, please</button>
+              </sc-if>
+              <sc-if value="{{ rerollSpent }}" hint-placeholder-val="{{ false }}">
+                <span style="font: italic 400 14px 'Nunito', sans-serif; color: #9aa6b2; padding: 12px 6px;">No take-backs &#8212; this one&#8217;s yours.</span>
+              </sc-if>
+              <button onClick="{{ complete }}" style="border: 1px solid #d23f1f; border-radius: 6px; padding: 12px 26px; font: 700 14px 'Nunito', sans-serif; color: #ffffff; text-shadow: 0 1px 1px rgba(0,0,0,.18); background: linear-gradient(180deg, #ff7d52, #ff5a33 55%, #f04d27); box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 2px 4px rgba(210,63,31,.3); cursor: pointer;" style-hover="filter: brightness(1.06)" style-active="transform: translateY(1px); box-shadow: none">I did it!</button>
+            </sc-if>
+            <sc-if value="{{ celebrated }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 14px;">
+                <div style="font: 600 19px 'Baloo 2', sans-serif; color: #2e3742;">Splendid! That makes {{ countLabel }}. See you tomorrow.</div>
+                <div style="display: flex; gap: 14px;">
+                  <button onClick="{{ goLog }}" style="border: none; background: none; padding: 12px 6px; font: 700 14px 'Nunito', sans-serif; color: #FF5A33; cursor: pointer;" style-hover="text-decoration: underline">See my whimsies &#8594;</button>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isLog }}" hint-placeholder-val="{{ false }}">
+        <div data-screen-label="My Whimsies" style="padding: 56px 72px 64px; max-width: 720px;">
+          <div style="font: 700 44px 'Baloo 2', sans-serif; color: #2e3742; letter-spacing: -1px; line-height: 1.1;">My Whimsies</div>
+          <div style="margin-top: 6px; font: 500 14px 'Nunito', sans-serif; color: #8694a3;">{{ countLabel }}</div>
+          <sc-if value="{{ noLog }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top: 36px; border: 1px dashed #ccd5de; border-radius: 14px; padding: 28px 30px; color: #8694a3; font: 400 15px/1.5 'Nunito', sans-serif;">Nothing here yet. Go press the big button &#8212; your first whimsy awaits.</div>
+          </sc-if>
+          <div style="margin-top: 22px;">
+            <sc-for list="{{ logRows }}" as="row" hint-placeholder-count="1">
+              <div style="display: flex; align-items: flex-start; gap: 14px; padding: 15px 2px; border-bottom: 1px solid #eef1f5;">
+                <span style="font-size: 15px; line-height: 1.4; flex: none;">{{ row.icon }}</span>
+                <span style="flex: 1; font: 500 16px/1.5 'Nunito', sans-serif; color: #3b4754;">{{ row.text }}</span>
+                <span style="font: 700 11px 'Nunito', sans-serif; color: #9aa6b2; text-transform: uppercase; letter-spacing: .08em; flex: none; margin-top: 4px;">{{ row.cat }}</span>
+                <span style="font: 400 13px 'Nunito', sans-serif; color: #aab5c0; flex: none; margin-top: 3px;">{{ row.when }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <button onClick="{{ goHome }}" style="margin-top: 30px; border: none; background: none; padding: 6px 0; font: 700 14px 'Nunito', sans-serif; color: #FF5A33; cursor: pointer;" style-hover="text-decoration: underline">&#8592; Back to the button</button>
+        </div>
+      </sc-if>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: linear-gradient(180deg, #e3eaf1, #cfd9e4); border-top: 1px solid #b3c0cf; font: 500 12px 'Nunito', sans-serif; color: #64707d;">
+      <span>Done</span>
+      <span>&#10022; {{ countLabel }}</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { view: 'home', idea: null, celebrated: false, log: [], cat: 'all', burst: 0, data: null, picksUsed: 0, done: false };
+
+  componentDidMount() {
+    let log = [];
+    try { log = JSON.parse(localStorage.getItem('whimsey-log-v1') || '[]'); } catch (e) {}
+    let day = null;
+    try { day = JSON.parse(localStorage.getItem('whimsey-day-v1') || 'null'); } catch (e) {}
+    const today = new Date().toDateString();
+    if (!day || day.date !== today) day = { date: today, picksUsed: 0, idea: null, done: false };
+    this.setState({
+      log,
+      picksUsed: day.picksUsed || 0,
+      idea: day.idea || null,
+      done: !!day.done,
+      celebrated: !!day.done
+    });
+    import('./ideas.js').then(m => this.setState({ data: m }));
+  }
+
+  saveDay = () => {
+    const s = this.state;
+    const day = { date: new Date().toDateString(), picksUsed: s.picksUsed, idea: s.idea, done: s.done };
+    try { localStorage.setItem('whimsey-day-v1', JSON.stringify(day)); } catch (e) {}
+  };
+
+  pick = () => {
+    const m = this.state.data;
+    if (!m || this.state.done || this.state.picksUsed >= 2) return;
+    const pool = m.IDEAS.filter(i => this.state.cat === 'all' || i.c === this.state.cat);
+    let next = pool[Math.floor(Math.random() * pool.length)];
+    if (pool.length > 1 && this.state.idea && next.t === this.state.idea.t) {
+      next = pool[(pool.indexOf(next) + 1) % pool.length];
+    }
+    this.setState(
+      { idea: next, picksUsed: this.state.picksUsed + 1, celebrated: false, view: 'home' },
+      this.saveDay
+    );
+  };
+
+  complete = () => {
+    if (!this.state.idea || this.state.done) return;
+    const entry = { t: this.state.idea.t, c: this.state.idea.c, ts: Date.now() };
+    const log = [entry, ...this.state.log];
+    try { localStorage.setItem('whimsey-log-v1', JSON.stringify(log)); } catch (e) {}
+    this.setState(
+      { log, celebrated: true, done: true, burst: this.state.burst + 1 },
+      this.saveDay
+    );
+  };
+
+  logo() {
+    const letters = 'Whimsey'.split('');
+    const els = letters.map((ch, i) => React.createElement('span', {
+      key: 'l' + i,
+      style: {
+        display: 'inline-block',
+        opacity: 0,
+        animation: 'logo-bounce .85s ' + (i * 0.07) + 's cubic-bezier(.22,1.2,.36,1) forwards'
+      }
+    }, ch));
+    els.push(React.createElement('span', {
+      key: 'bang',
+      style: {
+        display: 'inline-block',
+        color: '#FF5A33',
+        marginLeft: 3,
+        opacity: 0,
+        animation: 'bang-bounce 1s ' + (letters.length * 0.07 + 0.05) + 's cubic-bezier(.22,1.2,.36,1) forwards'
+      }
+    }, '!'));
+    return els;
+  }
+
+  confetti() {
+    if (!this.state.celebrated) return null;
+    const colors = ['#FF5A33', '#FFC83D', '#4fa86b', '#b06fd4', '#5B8DEF'];
+    const bits = [];
+    for (let i = 0; i < 16; i++) {
+      const left = 6 + ((i * 137) % 88);
+      const delay = (i % 5) * 0.07;
+      const size = 7 + (i % 3) * 3;
+      bits.push(React.createElement('span', {
+        key: this.state.burst + '-' + i,
+        style: {
+          position: 'absolute', left: left + '%', bottom: '15%',
+          width: size, height: size,
+          borderRadius: i % 2 ? '50%' : 2,
+          background: colors[i % colors.length],
+          opacity: 0,
+          animation: 'whimsy-pop .9s ' + delay + 's cubic-bezier(.2,.7,.3,1) forwards'
+        }
+      }));
+    }
+    return React.createElement('div', {
+      style: { position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden', borderRadius: 22 }
+    }, bits);
+  }
+
+  renderVals() {
+    const s = this.state;
+    const m = s.data;
+    const activeTab = 'linear-gradient(180deg, #ffffff, #eef3f8)';
+    const idleTab = 'linear-gradient(180deg, #c6d2e0, #aebfd1)';
+    const cats = (m ? m.CATS : []).map(c => ({
+      id: c.id, label: c.label, icon: c.icon,
+      onClick: () => this.setState({ cat: c.id }),
+      bg: s.cat === c.id ? '#ffffff' : 'transparent',
+      bd: s.cat === c.id ? '1px solid #b0bfcf' : '1px solid transparent',
+      fw: s.cat === c.id ? 700 : 500
+    }));
+    const iconFor = id => { const c = m && m.CATS.find(x => x.id === id); return c ? c.icon : '\u2728'; };
+    const fmt = ts => new Date(ts).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    const count = s.log.length;
+    return {
+      isHome: s.view === 'home',
+      isLog: s.view === 'log',
+      goHome: () => this.setState({ view: 'home' }),
+      goLog: () => this.setState({ view: 'log' }),
+      homeTabBg: s.view === 'home' ? activeTab : idleTab,
+      logTabBg: s.view === 'log' ? activeTab : idleTab,
+      addr: window.location.origin + '/' + (s.view === 'log' ? 'my-whimsies' : ''),
+      cats,
+      pick: this.pick,
+      complete: this.complete,
+      showStart: !s.idea && !s.done,
+      showIdea: !!s.idea,
+      showActions: !!s.idea && !s.done,
+      showReroll: !!s.idea && !s.done && s.picksUsed < 2,
+      rerollSpent: !!s.idea && !s.done && s.picksUsed >= 2,
+      celebrated: s.celebrated,
+      ideaText: s.idea ? s.idea.t : '',
+      ideaCatLabel: s.idea && m ? m.CAT_LABELS[s.idea.c] : '',
+      ideaIcon: s.idea ? iconFor(s.idea.c) : '\u2728',
+      count,
+      countLabel: count === 1 ? '1 whimsy completed' : count + ' whimsies completed',
+      hasLog: count > 0,
+      noLog: count === 0,
+      logRows: s.log.map(e => ({ text: e.t, cat: (m && m.CAT_LABELS[e.c]) || e.c, when: fmt(e.ts), icon: iconFor(e.c) })),
+      confetti: this.confetti(),
+      logo: this.logo()
+    };
+  }
+}
+</script>
+</body>
+</html>
